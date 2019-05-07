@@ -45,7 +45,7 @@ module CryptKeeper
         if criteria.present?
           records
             .where.not("TRIM(BOTH FROM #{field}) = ?", "")
-            .where("(pgp_sym_decrypt(cast(\"#{field}\" AS bytea), ?) = ?)",
+            .where("lower(pgp_sym_decrypt(cast(\"#{field}\" AS bytea), ?)) = ?",
                    key, criteria)
         else
           records.where(field => criteria)
